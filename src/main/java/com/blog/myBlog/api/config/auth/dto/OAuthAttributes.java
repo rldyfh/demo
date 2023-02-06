@@ -1,6 +1,7 @@
 package com.blog.myBlog.api.config.auth.dto;
 
-import com.blog.myBlog.api.domain.User;
+import com.blog.myBlog.api.domain.Role;
+import com.blog.myBlog.api.domain.Users;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -35,10 +36,11 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public User toEntity() {
-        return User.builder()
+    public Users toEntity() {
+        return Users.builder()
                 .name(name)
                 .email(email)
+                .role(Role.GUEST)
                 .build();
     }
 

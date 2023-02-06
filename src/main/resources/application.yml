@@ -5,6 +5,11 @@ spring:
       path: /h2-console
   profiles:
     include: oauth
+#  security:
+#    oauth2:
+#      client:
+#        clientId: 247574772089-7p8m7870q0p2b2ko9oiej2qi4o87ds3b.apps.googleusercontent.com
+#        clientSecret: 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
 
   data:
     web:
