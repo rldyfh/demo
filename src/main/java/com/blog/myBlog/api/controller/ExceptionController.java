@@ -21,36 +21,36 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionController {
 
-//    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    @ResponseBody
-//    public ErrorResponse exceptionHandler(MethodArgumentNotValidException e) {
-//        log.error("exceptionHandler error", e);
-//
-//        ErrorResponse response = ErrorResponse.builder()
-//                .code("400")
-//                .message("잘못된 요청입니다.")
-//                .build();
-//
-//        for (FieldError fieldError : e.getFieldErrors()) {
-//            response.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
-//        }
-//        return response;
-//    }
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ErrorResponse exceptionHandler(MethodArgumentNotValidException e) {
+        log.error("exceptionHandler error", e);
+
+        ErrorResponse response = ErrorResponse.builder()
+                .code("400")
+                .message("잘못된 요청입니다.")
+                .build();
+
+        for (FieldError fieldError : e.getFieldErrors()) {
+            response.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return response;
+    }
 
 
-//    @ExceptionHandler(MyBlogException.class)
-//    @ResponseBody
-//    public ResponseEntity<ErrorResponse> postNotFound(MyBlogException e) {
-//        int statusCode = e.getStatusCode();
-//
-//        ErrorResponse response = ErrorResponse.builder()
-//                .code(String.valueOf(statusCode))
-//                .message(e.getMessage())
-//                .validation(e.getValidation())
-//                .build();
-//
-//
-//        return ResponseEntity.status(statusCode).body(response);
-//    }
+    @ExceptionHandler(MyBlogException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> postNotFound(MyBlogException e) {
+        int statusCode = e.getStatusCode();
+
+        ErrorResponse response = ErrorResponse.builder()
+                .code(String.valueOf(statusCode))
+                .message(e.getMessage())
+                .validation(e.getValidation())
+                .build();
+
+
+        return ResponseEntity.status(statusCode).body(response);
+    }
 }
