@@ -2,8 +2,10 @@ package com.blog.myBlog.api.service;
 
 
 import com.blog.myBlog.api.domain.Post;
+import com.blog.myBlog.api.domain.Users;
 import com.blog.myBlog.api.exception.PostNotFound;
 import com.blog.myBlog.api.repository.PostRepository;
+import com.blog.myBlog.api.repository.UserRepository;
 import com.blog.myBlog.api.request.PostCreate;
 import com.blog.myBlog.api.request.PostEdit;
 import com.blog.myBlog.api.response.PostResponse;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     public void write(PostCreate postCreate) {
 

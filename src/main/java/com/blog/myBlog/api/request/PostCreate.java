@@ -1,6 +1,7 @@
 package com.blog.myBlog.api.request;
 
 import com.blog.myBlog.api.domain.Post;
+import com.blog.myBlog.api.domain.Users;
 import com.blog.myBlog.api.exception.InvalidRequest;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,10 +36,6 @@ public class PostCreate {
         this.content = content;
     }
 
-//    public void validate() {
-//        if(this.title.contains("바보")) {
-//            throw new InvalidRequest("title", "제목에 바보가 들어갈 수 없습니다.");
-//        }
 
 
 }

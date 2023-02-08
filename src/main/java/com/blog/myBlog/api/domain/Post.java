@@ -21,6 +21,15 @@ public class Post extends BaseTimeEntity{
     @Lob
     private String content;
 
+    @ManyToOne
+    private Users user;
+
+    //연관관계 메소드
+    public void setUser(Users user) {
+        this.user = user;
+        user.getPostList().add(this);
+    }
+
     @Builder
     public Post(String title, String content) {
         this.title = title;
