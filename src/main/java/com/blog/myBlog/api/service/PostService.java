@@ -1,7 +1,9 @@
 package com.blog.myBlog.api.service;
 
 
+import com.blog.myBlog.api.config.auth.dto.SessionUser;
 import com.blog.myBlog.api.domain.Post;
+import com.blog.myBlog.api.domain.Role;
 import com.blog.myBlog.api.domain.Users;
 import com.blog.myBlog.api.exception.PostNotFound;
 import com.blog.myBlog.api.repository.PostRepository;
@@ -26,13 +28,15 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public void write(PostCreate postCreate) {
+    public void write(PostCreate postCreate, SessionUser user) {
 
         Post post = Post.builder()
                         .title((postCreate.getTitle()))
                                 .content(postCreate.getContent())
                                         .build();
 
+        Optional<Users> user1 = userRepository.findByEmail(user.getEmail());
+        post.setUser(user1.get());
         postRepository.save(post);
     }
 

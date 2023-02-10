@@ -35,8 +35,8 @@ public class PostController {
     private final PostRepository postRepository;
 
     @PostMapping("/posts")
-    public void post(@RequestBody @Validated PostCreate postCreate) {
-        postService.write(postCreate);
+    public void post(@RequestBody @Validated PostCreate postCreate, @SessionAttribute(name="user") SessionUser user) {
+        postService.write(postCreate, user);
     }
 
     //글 1개 조회

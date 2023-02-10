@@ -20,7 +20,7 @@ public class PostResponse {
 
     public PostResponse(Long id, String title, String content) {
         this.id = id;
-        this.title = title.substring(0, Math.min(title.length(), 10));
+        this.title = title;
         this.content = content;
     }
 }
