@@ -1,6 +1,5 @@
 package com.blog.myBlog.api.config.auth;
 
-import com.blog.myBlog.api.domain.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,9 +19,8 @@ public class SecurityConfig {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/", "/css/**", "/images/**",
+                .antMatchers( "/", "/css/**", "/images/**", "/posts",
                         "/js/**", "/h2-console/**").permitAll()
-                .antMatchers("/posts/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
                 .and()
                 .logout()
