@@ -2,6 +2,7 @@ package com.blog.myBlog.api.config.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,7 +20,8 @@ public class SecurityConfig {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/", "/css/**", "/images/**", "/posts",
+                .antMatchers(HttpMethod.GET, "/posts").permitAll()
+                .antMatchers( "/", "/css/**", "/images/**",
                         "/js/**", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

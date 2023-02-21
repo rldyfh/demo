@@ -21,3 +21,8 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
