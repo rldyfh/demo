@@ -12,6 +12,7 @@ import com.blog.myBlog.api.request.PostCreate;
 import com.blog.myBlog.api.request.PostEdit;
 import com.blog.myBlog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,10 +57,11 @@ public class PostService {
     // entity(Post) 가 그대로 리턴되는거 원치 않음
     // PostResponse로 response하자
     // builder 코드의 중복 우려 -> 생성자 오버로딩
-    public List<PostResponse> getList(Pageable pageable) {
-        return postRepository.findAll(pageable).stream()
-                .map(PostResponse::new)
-                .collect(Collectors.toList());
+    public Page<PostResponse> getList(Pageable pageable) {
+//        return postRepository.findAll(pageable).stream()
+//                .map(PostResponse::new)
+//                .collect(Collectors.toList());
+        return postRepository.findAll(pageable).map(post -> new PostResponse(post));
     }
 
     @Transactional

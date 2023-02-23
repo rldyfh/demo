@@ -13,6 +13,7 @@ import com.blog.myBlog.api.response.PostResponse;
 import com.blog.myBlog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -47,7 +48,12 @@ public class PostController {
 
     //글 여러개 조회
     @GetMapping("/posts")
-    public List<PostResponse> getList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Page<PostResponse> getList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<PostResponse> list = postService.getList(pageable);
+        log.info("1 = {}", list.getContent());
+        log.info("2 = {}", list.getTotalPages());
+        log.info("3 = {}", list.getTotalElements());
+
         return postService.getList(pageable);
     }
 
@@ -61,11 +67,11 @@ public class PostController {
         postService.delete(postId);
     }
 
-    @GetMapping("/")
-    public SessionUser index() {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        return user;
-    }
+//    @GetMapping("/")
+//    public SessionUser index() {
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//        return user;
+//    }
 
     /**
      *  더미 데이터

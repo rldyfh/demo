@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        $.ajax({
+          url: "http://localhost:8080/posts",
+          type: "GET",
+          contentType: "application/json",
+          success: function(data) {
+            console.log(data);
+          }
+        });
+
+
+</script>
+</head>
+<body>
+    <ul>
+
+    </ul>
+
+</body>
+
+
+</html>
