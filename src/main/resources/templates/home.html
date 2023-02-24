@@ -1,28 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script>
-        $.ajax({
-          url: "http://localhost:8080/posts",
-          type: "GET",
-          contentType: "application/json",
-          success: function(data) {
-            console.log(data);
-          }
-        });
-
-
-</script>
 </head>
 <body>
-    <ul>
+    <table>
+        <tr>
+            <th>No.</th>
+            <th>제목</th>
+            <th>내용</th>
+        </tr>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}"></td>
+            <td><a th:href="@{|/posts/${post.id}?page=${posts.number}|}" th:text="${post.title}"></a></td>
+            <td><a th:href="@{|/posts/${post.id}?page=${posts.number}|}" th:text="${post.content}"></a></td>
+        </tr>
 
-    </ul>
+    </table>
 
+    <nav style="text-align: center;">
+        <ul class="pagination">
+            <li>
+                <a th:href="@{/(page=1)}" aria-label="First">
+                    <span aria-hidden="true">First</span>
+                </a>
+            </li>
+
+            <li th:class="${posts.first} ? 'disabled'">
+                <a th:href="${posts.first} ? '#' :@{/(page=${posts.number})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == posts.number + 1} ? 'active'">
+                <a th:text="${page}" th:href="@{/(page=${page})}"></a>
+            </li>
+
+            <li th:class="${posts.last} ? 'disabled'">
+                <a th:href="${posts.last} ? '#' : @{/(page=${posts.number + 2})}" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/(page=${posts.totalPages})}" aria-label="Last">
+                    <span aria-hidden="true">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </body>
+
+<style>
+    ul {
+        list-style-type: none;
+    }
+    li {
+        float : left;
+        margin-left: 20px;
+    }
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+</style>
 
 
 </html>

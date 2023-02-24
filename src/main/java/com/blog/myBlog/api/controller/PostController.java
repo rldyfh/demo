@@ -40,38 +40,34 @@ public class PostController {
         postService.write(postCreate, user);
     }
 
-    //글 1개 조회
-    @GetMapping("/posts/{postId}")
-    public PostResponse get(@PathVariable Long postId) {
-        return postService.get(postId);
-    }
+//    //글 1개 조회
+//    @GetMapping("/posts/{postId}")
+//    public PostResponse get(@PathVariable Long postId) {
+//        return postService.get(postId);
+//    }
 
-    //글 여러개 조회
-    @GetMapping("/posts")
-    public Page<PostResponse> getList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<PostResponse> list = postService.getList(pageable);
-        log.info("1 = {}", list.getContent());
-        log.info("2 = {}", list.getTotalPages());
-        log.info("3 = {}", list.getTotalElements());
+//    //글 여러개 조회
+//    @GetMapping("/posts")
+//    public Page<PostResponse> getList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+//        Page<PostResponse> list = postService.getList(pageable);
+//        log.info("1 = {}", list.getContent());
+//        log.info("2 = {}", list.getTotalPages());
+//        log.info("3 = {}", list.getTotalElements());
+//
+//        return postService.getList(pageable);
+//    }
 
-        return postService.getList(pageable);
-    }
-
-    @PatchMapping("/posts/{postId}")
-    public void edit(@PathVariable Long postId, @RequestBody PostEdit postEdit) {
-        postService.edit(postId, postEdit);
-    }
+//    @PatchMapping("/posts/{postId}")
+//    public void edit(@PathVariable Long postId, @RequestBody PostEdit postEdit) {
+//        postService.edit(postId, postEdit);
+//    }
 
     @DeleteMapping("/posts/{postId}")
     public void delete(@PathVariable Long postId) {
         postService.delete(postId);
     }
 
-//    @GetMapping("/")
-//    public SessionUser index() {
-//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-//        return user;
-//    }
+
 
     /**
      *  더미 데이터
@@ -82,9 +78,9 @@ public class PostController {
         //기본 admin
         Users admin = userRepository.save(Users.builder().id(1L).name("ADMIN").email("ADMIN@google.com").role(Role.ADMIN).build());
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 115; i++) {
             PostCreate post = PostCreate.builder()
-                    .title("title " + i)
+                    .title("title" + i)
                     .content("content" + i)
                     .build();
             //postService.write(post);

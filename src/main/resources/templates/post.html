@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" th:value="${post.id}" readonly>
+    <input type="text" th:value="${post.title}" readonly>
+    <input type="textarea" th:value="${post.content}" readonly>
+
+    <button type="button"><a th:href="@{|/posts/${postId}/edit|}">수정하기</a></button>
+    <button type="button"><a th:href="@{/?page={page}(page=${page})}">뒤로가기</a></button>
+</body>
+</html>
