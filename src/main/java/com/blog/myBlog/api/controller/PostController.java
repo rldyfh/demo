@@ -35,10 +35,10 @@ public class PostController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-    @PostMapping("/posts")
-    public void post(@RequestBody @Validated PostCreate postCreate, @SessionAttribute(name="user") SessionUser user) {
-        postService.write(postCreate, user);
-    }
+//    @PostMapping("/posts")
+//    public void post(@RequestBody @Validated PostCreate postCreate, @SessionAttribute(name="user") SessionUser user) {
+//        postService.write(postCreate, user);
+//    }
 
 //    //글 1개 조회
 //    @GetMapping("/posts/{postId}")

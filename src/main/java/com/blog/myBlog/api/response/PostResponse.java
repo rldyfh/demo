@@ -3,6 +3,7 @@ package com.blog.myBlog.api.response;
 import com.blog.myBlog.api.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Builder

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.validation.constraints.NotBlank;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class PostEdit {
 
+    private Long id;
     @NotBlank(message = "타이틀을 입력해주세요")
     private String title;
     @NotBlank(message = "컨텐츠를 입력해주세요")
@@ -19,7 +21,8 @@ public class PostEdit {
 
 
     @Builder
-    public PostEdit(String title, String content) {
+    public PostEdit(Long id, String title, String content) {
+        this.id = id;
         this.title = title;
         this.content = content;
     }

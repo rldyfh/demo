@@ -5,13 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="post" th:action="@{|/posts/${postId}/edit|}">
+    <form method="post" th:object="${postEdit}" th:action="@{|/posts/${postId}/edit?page=${page}|}">
         <input type="text" th:value="${post.id}" readonly>
-        <input type="text" th:value="${post.title}" name="title">
-        <input type="textarea" th:value="${post.content}" name="content">
+
+        <input type="text" th:value="${post.title}" th:fields="*{title}">
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+        <input type="textarea" th:value="${post.content}" th:fields="*{content}">
+        <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
 
         <button type="submit">수정하기</button>
-        <button type="button"><a th:href="@{|/posts/${postId}|}">뒤로가기</a></button>
+        <button type="button"><a th:href="@{|/posts/${postId}?page=${page}|}">뒤로가기</a></button>
 
     </form>
 </body>

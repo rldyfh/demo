@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:action="@{|/posts|}" th:object="${postCreate}" method="post">
+        <label for="title">title</label>
+        <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="Full Name">
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+        <label for="content">Name</label>
+        <input class="form-control" type="text" th:field="*{content}" id="content" placeholder="Full Name">
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+
+        <button type="submit">글 작성</button>
+        <button type="button"><a th:href="@{|/|}">뒤로가기</a></button>
+    </form>
+
+</body>
+</html>

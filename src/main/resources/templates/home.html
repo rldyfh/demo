@@ -13,8 +13,8 @@
         </tr>
         <tr th:each="post : ${posts}">
             <td th:text="${post.id}"></td>
-            <td><a th:href="@{|/posts/${post.id}?page=${posts.number}|}" th:text="${post.title}"></a></td>
-            <td><a th:href="@{|/posts/${post.id}?page=${posts.number}|}" th:text="${post.content}"></a></td>
+            <td><a th:href="@{|/posts/${post.id}?page=${posts.number+1}|}" th:text="${post.title}"></a></td>
+            <td><a th:href="@{|/posts/${post.id}?page=${posts.number+1}|}" th:text="${post.content}"></a></td>
         </tr>
 
     </table>
@@ -50,6 +50,11 @@
             </li>
         </ul>
     </nav>
+
+    <div>
+        <button type="button"><a th:href="@{/posts}">글 작성</a></button>
+    </div>
+
 </body>
 
 <style>
