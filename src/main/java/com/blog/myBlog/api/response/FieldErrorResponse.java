@@ -1,12 +1,9 @@
 package com.blog.myBlog.api.response;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,19 +21,19 @@ import java.util.Map;
 
 
 @Getter
-public class ErrorResponse {
+public class FieldErrorResponse {
 
     private final String code;
     private final String message;
     private final Map<String, String> validation;
 
-
     @Builder
-    public ErrorResponse(String code, String message, Map<String, String> validation) {
+    public FieldErrorResponse(String code, String message, Map<String, String> validation) {
         this.code = code;
         this.message = message;
-        this.validation = validation != null ? validation : new HashMap<String,String>();
+        this.validation = validation;
     }
+
 
 
     public void addValidation(String field, String defaultMessage) {

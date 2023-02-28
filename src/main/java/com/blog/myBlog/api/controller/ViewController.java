@@ -1,6 +1,8 @@
 package com.blog.myBlog.api.controller;
 
 import com.blog.myBlog.api.config.auth.dto.SessionUser;
+import com.blog.myBlog.api.exception.DeleteException;
+import com.blog.myBlog.api.exception.UpdateException;
 import com.blog.myBlog.api.request.PostCreate;
 import com.blog.myBlog.api.request.PostEdit;
 import com.blog.myBlog.api.response.PostResponse;
@@ -50,12 +52,17 @@ public class ViewController {
     }
 
     @GetMapping("/posts/{postId}/edit")
-    public String editForm(@PathVariable Long postId, @RequestParam String page, Model model) {
+    public String editForm(@PathVariable Long postId, @RequestParam String page, @SessionAttribute(name = "user") SessionUser user, Model model) {
+        // 글 작성자가 로그인한 사람과 다르면 예외 발생
         PostResponse post = postService.get(postId);
-        model.addAttribute("post", post);
-        model.addAttribute("page", page);
 
-        return "editForm";
+        if(post.getAuthor().equals(user.getName())) {
+            model.addAttribute("post", post);
+            model.addAttribute("page", page);
+            return "editForm";
+        }else {
+            throw new UpdateException();
+        }
     }
 
     @PostMapping("/posts/{postId}/edit")
@@ -76,8 +83,8 @@ public class ViewController {
     }
 
     @PostMapping("/delete/{postId}")
-    public String delete(@PathVariable Long postId) {
-        postService.delete(postId);
+    public String delete(@PathVariable Long postId, @SessionAttribute(name = "user") SessionUser user) {
+        postService.delete(postId , user);
 
         return "redirect:/";
     }

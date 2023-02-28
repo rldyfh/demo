@@ -5,6 +5,7 @@ import com.blog.myBlog.api.config.auth.dto.SessionUser;
 import com.blog.myBlog.api.domain.Post;
 import com.blog.myBlog.api.domain.Role;
 import com.blog.myBlog.api.domain.Users;
+import com.blog.myBlog.api.exception.DeleteException;
 import com.blog.myBlog.api.exception.PostNotFound;
 import com.blog.myBlog.api.repository.PostRepository;
 import com.blog.myBlog.api.repository.UserRepository;
@@ -49,6 +50,7 @@ public class PostService {
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
+                .author(post.getUser().getName())
                 .build();
 
         return response;
@@ -58,9 +60,6 @@ public class PostService {
     // PostResponse로 response하자
     // builder 코드의 중복 우려 -> 생성자 오버로딩
     public Page<PostResponse> getList(Pageable pageable) {
-//        return postRepository.findAll(pageable).stream()
-//                .map(PostResponse::new)
-//                .collect(Collectors.toList());
         return postRepository.findAll(pageable).map(post -> new PostResponse(post));
     }
 
@@ -74,10 +73,15 @@ public class PostService {
 
     }
 
-    public void delete(Long id) {
+    public void delete(Long id, SessionUser user) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
 
-        postRepository.delete(post);
+        if(post.getUser().getName().equals(user.getName())) {
+            postRepository.delete(post);
+        }else {
+            throw new DeleteException();
+        }
+
     }
 }

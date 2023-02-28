@@ -11,8 +11,9 @@
 
     <button type="button"><a th:href="@{|/posts/${postId}/edit?page=${page}|}">수정하기</a></button>
     <button type="button"><a th:href="@{/?page={page}(page=${page})}">뒤로가기</a></button>
+
     <form th:action="@{|/delete/${postId}|}" method="post">
-        <button type="submit">지우기</button>
+        <button type="submit" id="deleteBtn">지우기</button>
     </form>
 </body>
 </html>

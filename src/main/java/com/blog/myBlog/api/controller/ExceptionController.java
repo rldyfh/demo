@@ -1,20 +1,16 @@
 package com.blog.myBlog.api.controller;
 
-import com.blog.myBlog.api.exception.InvalidRequest;
+import com.blog.myBlog.api.exception.DeleteException;
 import com.blog.myBlog.api.exception.MyBlogException;
-import com.blog.myBlog.api.exception.PostNotFound;
-import com.blog.myBlog.api.response.ErrorResponse;
+import com.blog.myBlog.api.exception.UpdateException;
+import com.blog.myBlog.api.response.DefaultErrorResponse;
+import com.blog.myBlog.api.response.FieldErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -24,10 +20,10 @@ public class ExceptionController {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public ErrorResponse exceptionHandler(MethodArgumentNotValidException e) {
+    public FieldErrorResponse exceptionHandler(MethodArgumentNotValidException e) {
         log.error("exceptionHandler error", e);
 
-        ErrorResponse response = ErrorResponse.builder()
+        FieldErrorResponse response = FieldErrorResponse.builder()
                 .code("400")
                 .message("잘못된 요청입니다.")
                 .build();
@@ -38,13 +34,12 @@ public class ExceptionController {
         return response;
     }
 
-
     @ExceptionHandler(MyBlogException.class)
     @ResponseBody
-    public ResponseEntity<ErrorResponse> postNotFound(MyBlogException e) {
+    public ResponseEntity<FieldErrorResponse> postNotFound(MyBlogException e) {
         int statusCode = e.getStatusCode();
 
-        ErrorResponse response = ErrorResponse.builder()
+        FieldErrorResponse response = FieldErrorResponse.builder()
                 .code(String.valueOf(statusCode))
                 .message(e.getMessage())
                 .validation(e.getValidation())
@@ -53,4 +48,29 @@ public class ExceptionController {
 
         return ResponseEntity.status(statusCode).body(response);
     }
+
+    @ExceptionHandler(DeleteException.class)
+    public ResponseEntity<DefaultErrorResponse> cannotDelete(DeleteException e) {
+        int statusCode = e.getStatusCode();
+
+        DefaultErrorResponse response = DefaultErrorResponse.builder()
+                .code(String.valueOf(statusCode))
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(statusCode).body(response);
+    }
+
+    @ExceptionHandler(UpdateException.class)
+    public ResponseEntity<DefaultErrorResponse> cannotDelete(UpdateException e) {
+        int statusCode = e.getStatusCode();
+
+        DefaultErrorResponse response = DefaultErrorResponse.builder()
+                .code(String.valueOf(statusCode))
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(statusCode).body(response);
+    }
+
 }
