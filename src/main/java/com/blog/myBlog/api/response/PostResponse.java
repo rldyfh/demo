@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
 @Getter
 @Builder
 public class PostResponse {
 
-    private final Long id;
-    private final String title;
-    private final String content;
+    private Long id;
+    private String title;
+    private String content;
 
     public PostResponse(Post post){
         this.id= post.getId();

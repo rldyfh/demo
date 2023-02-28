@@ -7,12 +7,14 @@ import lombok.Setter;
 import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 public class PostEdit {
 
+    @NotNull
     private Long id;
     @NotBlank(message = "타이틀을 입력해주세요")
     private String title;

@@ -41,7 +41,7 @@ public class ViewController {
 
     //글 1개 조회
     @GetMapping("/posts/{postId}")
-    public String get(@PathVariable Long postId, @RequestParam int page, Model model) {
+    public String get(@PathVariable Long postId, @RequestParam String page, Model model) {
         PostResponse post = postService.get(postId);
         model.addAttribute("post", post);
         model.addAttribute("page", page);
@@ -50,7 +50,7 @@ public class ViewController {
     }
 
     @GetMapping("/posts/{postId}/edit")
-    public String editForm(@PathVariable Long postId, @RequestParam int page, Model model) {
+    public String editForm(@PathVariable Long postId, @RequestParam String page, Model model) {
         PostResponse post = postService.get(postId);
         model.addAttribute("post", post);
         model.addAttribute("page", page);
@@ -59,11 +59,13 @@ public class ViewController {
     }
 
     @PostMapping("/posts/{postId}/edit")
-    public String edit(@PathVariable Long postId, @RequestParam int page, RedirectAttributes re,
-                       @Validated @ModelAttribute PostEdit postEdit,
-                       BindingResult bindingResult) {
+    public String edit(@PathVariable Long postId, @RequestParam String page, RedirectAttributes re,
+                       @Validated @ModelAttribute("post") PostEdit postEdit,
+                       BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()) {
+            re.addAttribute("page", page);
+            model.addAttribute("page", page);
             return "editForm";
         }
 
