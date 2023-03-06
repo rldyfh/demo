@@ -5,7 +5,10 @@
 > 사용한 기술
 >> springboot + JPA + OAuth2,springSecurity + h2 database
 
+>> view : thymeleaf, jquery
+
 * * *
 1. 게시글 crud
-2. 각 게시글에 댓글
-3. Google, Naver login
+2. pageable, pagination
+3. 각 게시글에 댓글
+4. Google, Naver login
