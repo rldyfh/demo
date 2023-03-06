@@ -26,13 +26,12 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+//                .cors().configurationSource(corsConfigurationSource())
+//                .and()
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/posts").permitAll()
-                .antMatchers( "/", "/css/**", "/images/**","/posts/*","/favicon.ico",
+                .antMatchers( "/", "/css/**", "/images/**","/posts/*","/favicon.ico","/comment",
                         "/js/**", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -47,14 +46,14 @@ public class SecurityConfig{
         return http.build();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000");
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOrigin("http://localhost:3000");
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 }

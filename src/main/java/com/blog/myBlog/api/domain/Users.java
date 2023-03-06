@@ -30,6 +30,7 @@ public class Users extends BaseTimeEntity{
     private List<Post> postList = new ArrayList<>();
 
 
+
     @Builder
     public Users(Long id, String name, String email, Role role) {
         this.id = id;

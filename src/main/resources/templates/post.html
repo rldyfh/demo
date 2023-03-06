@@ -1,19 +1,106 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <title>Title</title>
+
 </head>
 <body>
     <input type="text" th:value="${post.id}" readonly>
     <input type="text" th:value="${post.title}" readonly>
     <input type="textarea" th:value="${post.content}" readonly>
 
-    <button type="button"><a th:href="@{|/posts/${postId}/edit?page=${page}|}">수정하기</a></button>
+
     <button type="button"><a th:href="@{/?page={page}(page=${page})}">뒤로가기</a></button>
 
     <form th:action="@{|/delete/${postId}|}" method="post">
         <button type="submit" id="deleteBtn">지우기</button>
     </form>
+
+<!--    &lt;!&ndash;  댓글 작성   &ndash;&gt;-->
+<!--    <form>-->
+<!--        <div>-->
+<!--            <div>-->
+<!--                <textarea id="comment" rows="4" placeholder="댓글을 입력하세요."></textarea>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <button type="button" id="saveCommentBtn">등록</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+
+<!--    &lt;!&ndash;  댓글 리스트  &ndash;&gt;-->
+<!--    <div>-->
+<!--        <ul id="commentList">-->
+
+<!--        </ul>-->
+<!--    </div>-->
+    <div class="card mb-2 mt-5">
+        <div class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <textarea class="form-control" id="comment-content" rows="1"></textarea>
+                    <button id="saveCommentBtn" type="button" class="btn btn-dark mt-3">등록</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br/>
+    <div class="card">
+        <div class="card-header">댓글</div>
+        <ul id="reply--box" class="list-group" th:each="comment : ${post.commentList}">
+            <li th:id="'comment--' + ${comment.id}" class="list-group-item d-flex justify-content-between">
+                <div th:text="${comment.content}"></div>
+            </li>
+        </ul>
+    </div>
+
+
 </body>
+
+
+<script>
+
+
+let replyIndex = {
+    init: function () {
+        $("#saveCommentBtn").on("click", () => {
+            this.commentSave();
+        });
+    },
+
+    commentSave: function () {
+        let data = {
+            content: $("#comment-content").val(),
+            postId : [[${post.id}]],
+            parent: null
+        }
+        let postId = [[${post.id}]];
+        let pageNum = [[${page}]]
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "/comment",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "text"
+        }).done(function (res) {
+            alert("댓글작성이 완료되었습니다.");
+            location.href = "/posts/" + postId + "?page=" + pageNum;
+        }).fail(function (err) {
+            alert(JSON.stringify(err));
+        });
+    },
+
+}
+replyIndex.init();
+
+</script>
+
+
+
 </html>

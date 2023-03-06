@@ -7,9 +7,12 @@ import com.blog.myBlog.api.domain.Role;
 import com.blog.myBlog.api.domain.Users;
 import com.blog.myBlog.api.repository.PostRepository;
 import com.blog.myBlog.api.repository.UserRepository;
+import com.blog.myBlog.api.request.CommentRequest;
 import com.blog.myBlog.api.request.PostCreate;
 import com.blog.myBlog.api.request.PostEdit;
+import com.blog.myBlog.api.response.CommentResponse;
 import com.blog.myBlog.api.response.PostResponse;
+import com.blog.myBlog.api.service.CommentService;
 import com.blog.myBlog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,44 +33,24 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class PostController {
+public class CommentController {
 
-    private final PostService postService;
-    private final HttpSession httpSession;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final CommentService commentService;
 
-//    @PostMapping("/posts")
-//    public void post(@RequestBody @Validated PostCreate postCreate, @SessionAttribute(name="user") SessionUser user) {
-//        postService.write(postCreate, user);
-//    }
 
-//    //글 1개 조회
-//    @GetMapping("/posts/{postId}")
-//    public PostResponse get(@PathVariable Long postId) {
-//        return postService.get(postId);
-//    }
+    @PostMapping("/comment")
+    public void saveComment(@RequestBody CommentRequest commentRequest) {
 
-//    //글 여러개 조회
-//    @GetMapping("/posts")
-//    public Page<PostResponse> getList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-//        Page<PostResponse> list = postService.getList(pageable);
-//        log.info("1 = {}", list.getContent());
-//        log.info("2 = {}", list.getTotalPages());
-//        log.info("3 = {}", list.getTotalElements());
-//
-//        return postService.getList(pageable);
-//    }
+        commentService.commentSave(commentRequest);
+    }
 
-//    @PatchMapping("/posts/{postId}")
-//    public void edit(@PathVariable Long postId, @RequestBody PostEdit postEdit) {
-//        postService.edit(postId, postEdit);
-//    }
+    @GetMapping("/comment")
+    public List<CommentResponse> getComment() {
+        return commentService.getList();
 
-//    @DeleteMapping("/posts/{postId}")
-//    public void delete(@PathVariable Long postId) {
-//        postService.delete(postId);
-//    }
+    }
 
 
 

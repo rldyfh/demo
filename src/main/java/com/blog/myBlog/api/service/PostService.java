@@ -11,6 +11,7 @@ import com.blog.myBlog.api.repository.PostRepository;
 import com.blog.myBlog.api.repository.UserRepository;
 import com.blog.myBlog.api.request.PostCreate;
 import com.blog.myBlog.api.request.PostEdit;
+import com.blog.myBlog.api.response.CommentResponse;
 import com.blog.myBlog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -46,12 +47,16 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
 
+        List<CommentResponse> commentResponses = post.getCommentList().stream().map(c -> new CommentResponse(c.getId(), c.getContent())).toList();
+
         PostResponse response = PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .author(post.getUser().getName())
+                .commentList(commentResponses)
                 .build();
+
 
         return response;
     }

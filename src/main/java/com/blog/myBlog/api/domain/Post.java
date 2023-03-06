@@ -1,11 +1,14 @@
 package com.blog.myBlog.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -24,11 +27,16 @@ public class Post extends BaseTimeEntity{
     @ManyToOne
     private Users user;
 
+    @JsonIgnoreProperties({"post"})
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    private List<Comment> commentList = new ArrayList<>();
+
     //연관관계 메소드
     public void setUser(Users user) {
         this.user = user;
         user.getPostList().add(this);
     }
+
 
     @Builder
     public Post(String title, String content) {

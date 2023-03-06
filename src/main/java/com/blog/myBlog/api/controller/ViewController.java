@@ -48,6 +48,8 @@ public class ViewController {
         model.addAttribute("post", post);
         model.addAttribute("page", page);
 
+
+
         return "post";
     }
 
