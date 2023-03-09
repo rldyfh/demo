@@ -28,7 +28,7 @@ public class Post extends BaseTimeEntity{
     private Users user;
 
     @JsonIgnoreProperties({"post"})
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post")
     private List<Comment> commentList = new ArrayList<>();
 
     //연관관계 메소드

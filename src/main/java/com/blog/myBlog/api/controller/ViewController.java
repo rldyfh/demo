@@ -43,8 +43,8 @@ public class ViewController {
 
     //글 1개 조회
     @GetMapping("/posts/{postId}")
-    public String get(@PathVariable Long postId, @RequestParam String page, Model model) {
-        PostResponse post = postService.get(postId);
+    public String get(@PathVariable Long postId, @RequestParam String page, Model model, @SessionAttribute(name = "user", required = false) SessionUser user) {
+        PostResponse post = postService.get(postId, user);
         model.addAttribute("post", post);
         model.addAttribute("page", page);
 
@@ -56,7 +56,7 @@ public class ViewController {
     @GetMapping("/posts/{postId}/edit")
     public String editForm(@PathVariable Long postId, @RequestParam String page, @SessionAttribute(name = "user") SessionUser user, Model model) {
         // 글 작성자가 로그인한 사람과 다르면 예외 발생
-        PostResponse post = postService.get(postId);
+        PostResponse post = postService.get(postId, user);
 
         if(post.getAuthor().equals(user.getName())) {
             model.addAttribute("post", post);

@@ -22,9 +22,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -32,7 +34,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class CommentController {
 
     private final UserRepository userRepository;
@@ -40,17 +42,25 @@ public class CommentController {
     private final CommentService commentService;
 
 
-    @PostMapping("/comment")
-    public void saveComment(@RequestBody CommentRequest commentRequest) {
+    @PostMapping("/{postId}/comment")
+    public String saveComment(@ModelAttribute CommentRequest commentRequest, @PathVariable Long postId,
+                              @RequestParam String page, RedirectAttributes re, @SessionAttribute(name = "user") SessionUser user) {
 
-        commentService.commentSave(commentRequest);
+        log.info("comment coming");
+        commentRequest.setPostId(postId);
+
+
+        re.addAttribute("page", page);
+        commentService.commentSave(commentRequest, user);
+        return "redirect:/posts/" + postId;
     }
 
-    @GetMapping("/comment")
-    public List<CommentResponse> getComment() {
-        return commentService.getList();
 
-    }
+//    @GetMapping("/comment")
+//    public List<CommentResponse> getComment() {
+//        return commentService.getList();
+//
+//    }
 
 
 

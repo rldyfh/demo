@@ -12,10 +12,12 @@ public class CommentResponse {
 
     private Long id;
     private String content;
+    private LoginUser user;
 
-    public CommentResponse(Long id, String content) {
+    public CommentResponse(Long id, String content, LoginUser user) {
         this.id = id;
         this.content = content;
+        this.user = user;
     }
 
 

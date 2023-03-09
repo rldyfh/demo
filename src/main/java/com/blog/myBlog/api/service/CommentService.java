@@ -24,23 +24,25 @@ public class CommentService {
     private final UserRepository userRepository;
 
 
-    public void commentSave(CommentRequest commentRequest) {
+    public void commentSave(CommentRequest commentRequest, SessionUser user) {
 
         Post post = postRepository.findById(commentRequest.getPostId()).get();
+        Users findUser = userRepository.findByEmail(user.getEmail()).get();
 
         Comment comment = Comment.builder()
                 .parent(commentRequest.getParent())
                 .content(commentRequest.getContent())
                 .post(post)
+                .user(findUser)
                 .build();
 
         commentRepository.save(comment);
 
     }
 
-    public List<CommentResponse> getList() {
-        List<Comment> commentList = commentRepository.findAll();
-
-        return commentList.stream().map(c -> new CommentResponse(c.getId(), c.getContent())).toList();
-    }
+//    public List<CommentResponse> getList() {
+//        List<Comment> commentList = commentRepository.findAll();
+//
+//        return commentList.stream().map(c -> new CommentResponse(c.getId(), c.getContent())).toList();
+//    }
 }

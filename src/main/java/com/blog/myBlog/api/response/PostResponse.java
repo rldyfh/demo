@@ -22,7 +22,6 @@ public class PostResponse {
         this.id= post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-
     }
 
     @Builder

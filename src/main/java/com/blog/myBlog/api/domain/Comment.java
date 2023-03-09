@@ -29,6 +29,9 @@ public class Comment extends BaseTimeEntity{
     @ManyToOne
     private Post post;
 
+    @ManyToOne
+    private Users user;
+
 
     @Builder
     public Comment(Long id, Comment parent, String content,  Post post, Users user) {
@@ -36,13 +39,13 @@ public class Comment extends BaseTimeEntity{
         this.parent = parent;
         this.content = content;
         this.post = post;
+        this.user = user;
     }
 
     public void setPostComment(Post post) {
         this.post = post;
         post.getCommentList().add(this);
     }
-
 
     public void setParentComment(Comment comment) {
         this.parent = comment;

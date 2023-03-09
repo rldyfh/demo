@@ -31,7 +31,7 @@ public class SecurityConfig{
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/", "/css/**", "/images/**","/posts/*","/favicon.ico","/comment",
+                .antMatchers( "/", "/css/**", "/images/**","/posts/*","/favicon.ico",
                         "/js/**", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -41,7 +41,6 @@ public class SecurityConfig{
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
-
 
         return http.build();
     }

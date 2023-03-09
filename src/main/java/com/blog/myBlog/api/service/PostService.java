@@ -12,6 +12,7 @@ import com.blog.myBlog.api.repository.UserRepository;
 import com.blog.myBlog.api.request.PostCreate;
 import com.blog.myBlog.api.request.PostEdit;
 import com.blog.myBlog.api.response.CommentResponse;
+import com.blog.myBlog.api.response.LoginUser;
 import com.blog.myBlog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,11 +45,13 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public PostResponse get(Long id) {
+    public PostResponse get(Long id, SessionUser user) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
 
-        List<CommentResponse> commentResponses = post.getCommentList().stream().map(c -> new CommentResponse(c.getId(), c.getContent())).toList();
+
+        List<CommentResponse> commentResponses = post.getCommentList().stream()
+                .map(c -> new CommentResponse(c.getId(), c.getContent(), new LoginUser(user.getName()))).toList();
 
         PostResponse response = PostResponse.builder()
                 .id(post.getId())
