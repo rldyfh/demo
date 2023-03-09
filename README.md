@@ -1,11 +1,11 @@
 # 게시판 토이프로젝트
 
-![image](https://user-images.githubusercontent.com/45328298/223045852-e19f03f4-f591-4e66-87c1-5e2b2cdf707a.png)
+![image](https://user-images.githubusercontent.com/45328298/223962254-8bfcc7db-4011-400c-a255-110c1e2a53a4.png)
 
 > 사용한 기술
->> springboot + JPA + OAuth2,springSecurity + h2 database
+>> springboot + JPA + h2 database
 
->> view : thymeleaf, jquery
+>> view : thymeleaf
 
 * * *
 1. 게시글 crud
